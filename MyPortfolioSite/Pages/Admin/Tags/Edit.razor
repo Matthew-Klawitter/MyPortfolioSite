@@ -1,0 +1,25 @@
+﻿@page "/admin/tags/edit/{Id}"
+
+@using MyPortfolioSite.Data
+@inject TagService tagService
+@inject NavigationManager uriHelper
+
+<h4>Edit Tag</h4>
+<Form ButtonText="Submit" TagData="@tag" OnValidSubmit="@EditTag" BackUri="admin/tags" />
+
+@code {
+    [Parameter] public string Id { get; set; }
+
+    Tag tag = new Tag();
+
+    protected override async Task OnInitializedAsync()
+    {
+        tag = await tagService.GetTagAsync(int.Parse(Id));
+    }
+
+    async Task EditTag()
+    {
+        await tagService.UpdateTagAsync(tag);
+        uriHelper.NavigateTo("/admin/tags");
+    }
+}

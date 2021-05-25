@@ -1,0 +1,25 @@
+﻿@page "/admin/tags/delete/{Id}"
+
+@using MyPortfolioSite.Data
+@inject TagService tagService
+@inject NavigationManager uriHelper
+
+<h4>Are you sure you want to delete this tag?</h4>
+<Form ButtonText="Delete" TagData="@tag" OnValidSubmit="@DeleteTag" BackUri="admin/tags" />
+
+@code {
+    [Parameter] public string Id { get; set; }
+
+    Tag tag = new Tag();
+
+    protected override async Task OnInitializedAsync()
+    {
+        tag = await tagService.GetTagAsync(int.Parse(Id));
+    }
+
+    async Task DeleteTag()
+    {
+        await tagService.DeleteTagAsync(tag);
+        uriHelper.NavigateTo("/admin/tags");
+    }
+}

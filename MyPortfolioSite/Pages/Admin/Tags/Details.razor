@@ -1,0 +1,24 @@
+﻿@page "/admin/tags/details/{Id}"
+
+@using MyPortfolioSite.Data
+@inject TagService tagService
+@inject NavigationManager uriHelper
+
+<h4>Tag Details</h4>
+<Form ButtonText="Go back" TagData="@tag" OnValidSubmit="@GoBack" BackUri="admin/tags" />
+
+@code {
+    [Parameter] public string Id { get; set; }
+
+    Tag tag = new Tag();
+
+    protected override async Task OnInitializedAsync()
+    {
+        tag = await tagService.GetTagAsync(int.Parse(Id));
+    }
+
+    void GoBack()
+    {
+        uriHelper.NavigateTo("/admin/tags");
+    }
+}

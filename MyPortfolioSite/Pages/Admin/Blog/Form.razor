@@ -1,0 +1,77 @@
+﻿@using MyPortfolioSite.Data
+@inject TagService tagService
+
+<EditForm Model="@PostData" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>Title:</label>
+        <div>
+            <InputText @bind-Value="@PostData.Title" />
+            <ValidationMessage For="@(() => PostData.Title)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Desc:</label>
+        <div>
+            <InputTextArea @bind-Value="@PostData.Desc" />
+            <ValidationMessage For="@(() => PostData.Desc)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Author:</label>
+        <div>
+            <InputText @bind-Value="@PostData.Author" />
+            <ValidationMessage For="@(() => PostData.Author)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Content:</label>
+        <div>
+            <InputTextArea @bind-Value="@PostData.Content" />
+            <ValidationMessage For="@(() => PostData.Content)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Public:</label>
+        <div>
+            <InputCheckbox @bind-Value="@PostData.IsPublic" />
+            <ValidationMessage For="@(() => PostData.IsPublic)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Tags:</label>
+        <div>
+            <InputSelect @bind-Value="@PostData.Tags">
+                @if (allTags != null)
+                {
+                    @foreach (var t in allTags)
+                    {
+                        <option>@t.Name</option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => PostData.Tags)" />
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">
+        @ButtonText
+    </button>
+
+    <a class="nav-link" href="@BackUri">
+        <span class="oi oi-chevron-left" aria-hidden="true"></span> Go back
+    </a>
+</EditForm>
+
+@code {
+    [Parameter] public BlogPost PostData { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Create";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+    [Parameter] public string BackUri { get; set; }
+
+    private List<Tag> allTags;
+
+    protected override async Task OnInitializedAsync()
+    {
+        allTags = await tagService.GetTagsAsync();
+    }
+}

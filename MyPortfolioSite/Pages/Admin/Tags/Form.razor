@@ -1,0 +1,27 @@
+﻿@using MyPortfolioSite.Data
+
+<EditForm Model="@TagData" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>Name:</label>
+        <div>
+            <InputText @bind-Value="@TagData.Name" />
+            <ValidationMessage For="@(() => TagData.Name)" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success">
+        @ButtonText
+    </button>
+
+    <a class="nav-link" href="@BackUri">
+        <span class="oi oi-chevron-left" aria-hidden="true"></span> Go back
+    </a>
+</EditForm>
+
+@code {
+    [Parameter] public Tag TagData { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Create";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+    [Parameter] public string BackUri { get; set; }
+}

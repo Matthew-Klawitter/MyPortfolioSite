@@ -1,0 +1,24 @@
+﻿@page "/admin/blogposts/details/{Id}"
+
+@using MyPortfolioSite.Data
+@inject BlogPostService blogPostService
+@inject NavigationManager uriHelper
+
+<h4>Blog Post Details</h4>
+<Form ButtonText="Go back" PostData="@post" OnValidSubmit="@GoBack" BackUri="admin/blogposts" />
+
+@code {
+    [Parameter] public string Id { get; set; }
+
+    BlogPost post = new BlogPost();
+
+    protected override async Task OnInitializedAsync()
+    {
+        post = await blogPostService.GetBlogPostAsync(int.Parse(Id));
+    }
+
+    void GoBack()
+    {
+        uriHelper.NavigateTo("/admin/blogposts");
+    }
+}

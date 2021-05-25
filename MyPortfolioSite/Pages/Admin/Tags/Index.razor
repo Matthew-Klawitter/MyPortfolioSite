@@ -1,0 +1,54 @@
+﻿@page "/admin/tags"
+
+@using MyPortfolioSite.Data
+@inject TagService tagService
+
+<p>
+    <NavLink class="nav-link" href="admin/tags/create">
+        <span class="oi oi-plus" aria-hidden="true"></span> Create
+    </NavLink>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tags
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (tags != null)
+        {
+            @foreach (var tag in tags)
+            {
+                <tr>
+                    <td>
+                        @tag.Name
+                    </td>
+                    <td>
+                        <a href="admin/tags/edit/@tag.Id.ToString()">
+                            <span class="oi oi-plus" aria-hidden="true"></span> Edit
+                        </a>
+                        <a href="admin/tags/details/@tag.Id.ToString()">
+                            <span class="oi oi-plus" aria-hidden="true"></span> Details
+                        </a>
+                        <a href="admin/tags/delete/@tag.Id.ToString()">
+                            <span class="oi oi-plus" aria-hidden="true"></span> Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>
+
+@code {
+    private List<Tag> tags;
+
+    protected override async Task OnInitializedAsync()
+    {
+        tags = await tagService.GetTagsAsync();
+    }
+}

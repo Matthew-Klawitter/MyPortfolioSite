@@ -1,0 +1,54 @@
+﻿@page "/admin/blogposts"
+
+@using MyPortfolioSite.Data
+@inject BlogPostService blogPostService
+
+<p>
+    <NavLink class="nav-link" href="admin/blogposts/create">
+        <span class="oi oi-plus" aria-hidden="true"></span> Create
+    </NavLink>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Blog Posts
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (posts != null)
+        {
+            @foreach (var post in posts)
+            {
+                <tr>
+                    <td>
+                        @post.Title
+                    </td>
+                    <td>
+                        <a href="admin/blogposts/edit/@post.Id.ToString()">
+                            <span class="oi oi-plus" aria-hidden="true"></span> Edit
+                        </a>
+                        <a href="admin/blogposts/details/@post.Id.ToString()">
+                            <span class="oi oi-plus" aria-hidden="true"></span> Details
+                        </a>
+                        <a href="admin/blogposts/delete/@post.Id.ToString()">
+                            <span class="oi oi-plus" aria-hidden="true"></span> Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>
+
+@code {
+    private List<BlogPost> posts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        posts = await blogPostService.GetBlogPostsAsync();
+    }
+}

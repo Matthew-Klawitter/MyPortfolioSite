@@ -1,0 +1,25 @@
+﻿@page "/admin/blogposts/delete/{Id}"
+
+@using MyPortfolioSite.Data
+@inject BlogPostService blogPostService
+@inject NavigationManager uriHelper
+
+<h4>Are you sure you want to delete this blog post?</h4>
+<Form ButtonText="Delete" PostData="@post" OnValidSubmit="@DeleteBlogPost" BackUri="admin/blogposts" />
+
+@code {
+    [Parameter] public string Id { get; set; }
+
+    BlogPost post = new BlogPost();
+
+    protected override async Task OnInitializedAsync()
+    {
+        post = await blogPostService.GetBlogPostAsync(int.Parse(Id));
+    }
+
+    async Task DeleteBlogPost()
+    {
+        await blogPostService.DeleteBlogPostAsync(post);
+        uriHelper.NavigateTo("/admin/blogposts");
+    }
+}

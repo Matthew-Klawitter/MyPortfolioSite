@@ -1,0 +1,18 @@
+﻿@page "/admin/tags/create"
+
+@using MyPortfolioSite.Data
+@inject TagService tagService
+@inject NavigationManager uriHelper
+
+<h4>Create Tag</h4>
+<Form ButtonText="Create Tag" TagData="@tag" OnValidSubmit="@CreateTag" BackUri="admin/tags" />
+
+@code {
+    Tag tag = new Tag();
+
+    async Task CreateTag()
+    {
+        await tagService.InsertTagAsync(tag);
+        uriHelper.NavigateTo("/admin/tags");
+    }
+}

@@ -1,0 +1,26 @@
+﻿@page "/admin/blogposts/edit/{Id}"
+
+@using MyPortfolioSite.Data
+@inject BlogPostService blogPostService
+@inject NavigationManager uriHelper
+
+<h4>Edit Blog Post</h4>
+<Form ButtonText="Submit" PostData="@post" OnValidSubmit="@EditBlogPost"
+      BackUri="admin/blogposts" />
+
+@code {
+    [Parameter] public string Id { get; set; }
+
+    BlogPost post = new BlogPost();
+
+    protected override async Task OnInitializedAsync()
+    {
+        post = await blogPostService.GetBlogPostAsync(int.Parse(Id));
+    }
+
+    async Task EditBlogPost()
+    {
+        await blogPostService.UpdateBlogPostAsync(post);
+        uriHelper.NavigateTo("/admin/blogposts");
+    }
+}
