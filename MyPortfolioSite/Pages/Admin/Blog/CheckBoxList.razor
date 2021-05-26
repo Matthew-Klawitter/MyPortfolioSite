@@ -1,0 +1,50 @@
+﻿@using MyPortfolioSite.Data
+@inject TagService tagService
+<div>
+    @if (Data != null)
+    {
+        foreach (var item in Data)
+        {
+            var Text = TextField?.Invoke(item);
+            var Value = ValueField?.Invoke(item).ToString();
+            bool Checked = false;
+            if (SelectedTags.Contains(Value))
+            {
+                Checked = true;
+            }
+            <input type="checkbox" checked=@Checked
+                   @onchange="eventArgs => { CheckboxClicked(Value, eventArgs.Value); }" />
+            @Text <br />
+        }
+    }
+</div>
+
+@code {
+    //Data for the Checkbox
+    [Parameter] public IEnumerable<Tag> Data { get; set; }
+    // The field to be shown adjacent to checkbox
+    [Parameter] public Func<Tag, string> TextField { get; set; }
+    // The Value which checkbox will return when checked
+    [Parameter] public Func<Tag, int> ValueField { get; set; }
+    // The array which contains the list of selected checkboxs
+    [Parameter] public List<string> SelectedTags { get; set; }
+
+    //Method to update the selected value on click on checkbox
+    public void CheckboxClicked(string selected, object Checked)
+    {
+        if ((bool)Checked)
+        {
+            if (!SelectedTags.Contains(selected))
+            {
+                SelectedTags.Add(selected);
+            }
+        }
+        else
+        {
+            if (SelectedTags.Contains(selected))
+            {
+                SelectedTags.Remove(selected);
+            }
+        }
+    }
+}

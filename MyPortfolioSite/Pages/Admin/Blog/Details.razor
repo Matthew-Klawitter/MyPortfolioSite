@@ -5,16 +5,27 @@
 @inject NavigationManager uriHelper
 
 <h4>Blog Post Details</h4>
-<Form ButtonText="Go back" PostData="@post" OnValidSubmit="@GoBack" BackUri="admin/blogposts" />
+<Form ButtonText="Go back" PostData="@post" SelectedTags="@selectedTagIds" 
+      OnValidSubmit="@GoBack" BackUri="admin/blogposts" />
 
 @code {
     [Parameter] public string Id { get; set; }
 
     BlogPost post = new BlogPost();
+    public List<string> selectedTagIds = new List<string>();
 
     protected override async Task OnInitializedAsync()
     {
         post = await blogPostService.GetBlogPostAsync(int.Parse(Id));
+
+        if (post.Tags != null)
+        {
+            foreach (var tag in post.Tags)
+            {
+                selectedTagIds.Add(tag.Id.ToString());
+            }
+        }
+
     }
 
     void GoBack()

@@ -5,16 +5,26 @@
 @inject NavigationManager uriHelper
 
 <h4>Are you sure you want to delete this blog post?</h4>
-<Form ButtonText="Delete" PostData="@post" OnValidSubmit="@DeleteBlogPost" BackUri="admin/blogposts" />
+<Form ButtonText="Delete" PostData="@post" SelectedTags="@selectedTagIds" 
+      OnValidSubmit="@DeleteBlogPost" BackUri="admin/blogposts" />
 
 @code {
     [Parameter] public string Id { get; set; }
 
     BlogPost post = new BlogPost();
+    public List<string> selectedTagIds = new List<string>();
 
     protected override async Task OnInitializedAsync()
     {
         post = await blogPostService.GetBlogPostAsync(int.Parse(Id));
+
+        if (post.Tags != null)
+        {
+            foreach (var tag in post.Tags)
+            {
+                selectedTagIds.Add(tag.Id.ToString());
+            }
+        }
     }
 
     async Task DeleteBlogPost()
