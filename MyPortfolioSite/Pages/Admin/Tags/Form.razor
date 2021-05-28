@@ -4,10 +4,19 @@
     <DataAnnotationsValidator />
     <div class="form-group">
         <label>Name:</label>
-        <div>
-            <InputText @bind-Value="@TagData.Name" />
-            <ValidationMessage For="@(() => TagData.Name)" />
-        </div>
+        @if (IsEditable)
+        {
+            <div>
+                <InputText @bind-Value="@TagData.Name" />
+                <ValidationMessage For="@(() => TagData.Name)" />
+            </div>
+        }
+        else
+        {
+            <div>
+                <InputText @bind-Value="@TagData.Name" disabled />
+            </div>
+        }
     </div>
 
     <button type="submit" class="btn btn-success">
@@ -24,4 +33,5 @@
     [Parameter] public string ButtonText { get; set; } = "Create";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
     [Parameter] public string BackUri { get; set; }
+    [Parameter] public bool IsEditable { get; set; } = false;
 }

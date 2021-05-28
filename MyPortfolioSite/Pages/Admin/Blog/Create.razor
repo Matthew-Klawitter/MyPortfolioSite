@@ -5,7 +5,8 @@
 @inject NavigationManager uriHelper
 
 <h4>Create BlogPost</h4>
-<Form ButtonText="Create Blog Post" PostData="@post" SelectedTags="@selectedTagIds" OnValidSubmit="@CreateBlogPost"
+<Form ButtonText="Create Blog Post" PostData="@post" IsEditable="@true" 
+      SelectedTags="@selectedTagIds" OnValidSubmit="@CreateBlogPost"
       BackUri="admin/blogposts" />
 
 @code {

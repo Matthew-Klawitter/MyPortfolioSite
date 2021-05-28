@@ -5,29 +5,36 @@
     {
         foreach (var item in Data)
         {
-            var Text = TextField?.Invoke(item);
-            var Value = ValueField?.Invoke(item).ToString();
+            var Text = item.Name;
+            var Value = item.Id.ToString();
             bool Checked = false;
             if (SelectedTags.Contains(Value))
             {
                 Checked = true;
             }
-            <input type="checkbox" checked=@Checked
-                   @onchange="eventArgs => { CheckboxClicked(Value, eventArgs.Value); }" />
-            @Text <br />
+
+            @if (IsEditable)
+            {
+                <input type="checkbox" checked=@Checked
+                       @onchange="eventArgs => { CheckboxClicked(Value, eventArgs.Value); }" />
+                @Text <br />
+            }
+            else
+            {
+                <input type="checkbox" checked=@Checked disabled />
+                @Text <br />
+            }
         }
     }
 </div>
 
 @code {
-    //Data for the Checkbox
+    // Tag data to display in checkboxes
     [Parameter] public IEnumerable<Tag> Data { get; set; }
-    // The field to be shown adjacent to checkbox
-    [Parameter] public Func<Tag, string> TextField { get; set; }
-    // The Value which checkbox will return when checked
-    [Parameter] public Func<Tag, int> ValueField { get; set; }
-    // The array which contains the list of selected checkboxs
+    // Contains the list of Tag Ids mapped to selected checkboxs
     [Parameter] public List<string> SelectedTags { get; set; }
+    // Determines if the form should contain editable fields
+    [Parameter] public bool IsEditable { get; set; }
 
     //Method to update the selected value on click on checkbox
     public void CheckboxClicked(string selected, object Checked)

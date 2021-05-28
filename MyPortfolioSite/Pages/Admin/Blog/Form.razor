@@ -5,47 +5,90 @@
     <DataAnnotationsValidator />
     <div class="form-group">
         <label>Title:</label>
-        <div>
-            <InputText @bind-Value="@PostData.Title" />
-            <ValidationMessage For="@(() => PostData.Title)" />
-        </div>
+        @if (IsEditable)
+        {
+            <div>
+                <InputText @bind-Value="@PostData.Title" />
+                <ValidationMessage For="@(() => PostData.Title)" />
+            </div>
+        }
+        else
+        {
+            <div>
+                <InputText @bind-Value="@PostData.Title" disabled />
+            </div>
+        }
     </div>
     <div class="form-group">
         <label>Desc:</label>
-        <div>
-            <InputTextArea @bind-Value="@PostData.Desc" />
-            <ValidationMessage For="@(() => PostData.Desc)" />
-        </div>
+        @if (IsEditable)
+        {
+            <div>
+                <InputTextArea @bind-Value="@PostData.Desc" />
+                <ValidationMessage For="@(() => PostData.Desc)" />
+            </div>
+        }
+        else
+        {
+            <div>
+                <InputTextArea @bind-Value="@PostData.Desc" disabled />
+            </div>
+        }
     </div>
     <div class="form-group">
         <label>Author:</label>
-        <div>
-            <InputText @bind-Value="@PostData.Author" />
-            <ValidationMessage For="@(() => PostData.Author)" />
-        </div>
+        @if (IsEditable)
+        {
+            <div>
+                <InputText @bind-Value="@PostData.Author" />
+                <ValidationMessage For="@(() => PostData.Author)" />
+            </div>
+        }
+        else
+        {
+            <div>
+                <InputText @bind-Value="@PostData.Author" disabled />
+            </div>
+        }
     </div>
     <div class="form-group">
         <label>Content:</label>
-        <div>
-            <InputTextArea @bind-Value="@PostData.Content" />
-            <ValidationMessage For="@(() => PostData.Content)" />
-        </div>
+        @if (IsEditable)
+        {
+            <div>
+                <InputTextArea @bind-Value="@PostData.Content" />
+                <ValidationMessage For="@(() => PostData.Content)" />
+            </div>
+        }
+        else
+        {
+            <div>
+                <InputTextArea @bind-Value="@PostData.Content" disabled />
+            </div>
+        }
     </div>
     <div class="form-group">
         <label>Public:</label>
-        <div>
-            <InputCheckbox @bind-Value="@PostData.IsPublic" />
-            <ValidationMessage For="@(() => PostData.IsPublic)" />
-        </div>
+        @if (IsEditable)
+        {
+            <div>
+                <InputCheckbox @bind-Value="@PostData.IsPublic" />
+                <ValidationMessage For="@(() => PostData.IsPublic)" />
+            </div>
+        }
+        else
+        {
+            <div>
+                <InputCheckbox @bind-Value="@PostData.IsPublic" disabled />
+            </div>
+        }
     </div>
     <div class="form-group">
         <label>Tags:</label>
-        <CheckBoxList Data="@allTags"
-                      TextField="@((item) => item.Name)"
-                      ValueField="@((item) => item.Id)"
-                      SelectedTags="@SelectedTags" />
+        <CheckBoxList Data="@allTags" SelectedTags="@SelectedTags" IsEditable="@IsEditable"/>
         <ValidationMessage For="@(() => PostData.Tags)" />
     </div>
+
     <button type="submit" class="btn btn-success">
         @ButtonText
     </button>
@@ -60,6 +103,8 @@
     [Parameter] public string ButtonText { get; set; } = "Create";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
     [Parameter] public string BackUri { get; set; }
+    // Determines if the form should contain editable fields
+    [Parameter] public bool IsEditable { get; set; } = false;
     [Parameter] public List<string> SelectedTags { get; set; }
 
     private List<Tag> allTags;

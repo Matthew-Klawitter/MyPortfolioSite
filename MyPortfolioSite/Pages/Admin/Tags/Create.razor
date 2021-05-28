@@ -5,7 +5,7 @@
 @inject NavigationManager uriHelper
 
 <h4>Create Tag</h4>
-<Form ButtonText="Create Tag" TagData="@tag" OnValidSubmit="@CreateTag" BackUri="admin/tags" />
+<Form ButtonText="Create Tag" TagData="@tag" OnValidSubmit="@CreateTag" BackUri="admin/tags" IsEditable="@true" />
 
 @code {
     Tag tag = new Tag();
