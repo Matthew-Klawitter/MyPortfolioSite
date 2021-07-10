@@ -1,0 +1,49 @@
+﻿@page "/admin/photos"
+
+@using MyPortfolioSite.Data
+
+<p>
+    <NavLink class="nav-link" href="admin/photos/upload">
+        <span class="oi oi-plus" aria-hidden="true"></span> Upload
+    </NavLink>
+</p>
+@*<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Photos
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (posts != null)
+        {
+            @foreach (var post in posts)
+            {
+                <tr>
+                    <td>
+                        @post.Title
+                    </td>
+                    <td>
+                        <a href="admin/photos/view/@post.Id.ToString()">
+                            <span class="oi oi-plus" aria-hidden="true"></span> View
+                        </a>
+                        <a href="admin/photos/delete/@post.Id.ToString()">
+                            <span class="oi oi-plus" aria-hidden="true"></span> Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>*@
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        
+    }
+}

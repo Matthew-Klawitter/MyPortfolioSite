@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <Folder Include="Pages\Admin\Projects\" />
+    <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
 </Project>
